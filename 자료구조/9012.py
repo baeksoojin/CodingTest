@@ -1,5 +1,5 @@
-# ( -> push, ) -> pop 을 stack을 사용해서 진행하고 모두 진행됐을 때, 그 길이가 0이여야함.
-# pop의 경우에 stack의 길이가 0이 아닐때 진행하도록한다.\
+# ( -> push, ) -> pop 을 queue나 stack ->deque 사용해서 진행하고 모두 진행됐을 때, 그 길이가 0이여야함.
+# pop의 경우에 queue나 stack 길이가 0이 아닐때 진행하도록한다.\
 from collections import deque
 
 n = int(input())
