@@ -17,9 +17,11 @@ for _ in range(m):
 
 queue = []
 heapq.heappush(queue,(0, start))
+time[start]] = 0
 
 
 while(queue):
+
     time,current_node = heapq.heappop(queue)
     
     if time > times[current_node]:
@@ -40,4 +42,4 @@ for time in times:
         count += 1
         result_time = max(time, result_time)
 
-print(count , result_time)
+print(count-1 , result_time)
