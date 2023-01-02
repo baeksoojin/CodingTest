@@ -17,7 +17,7 @@ for _ in range(m):
 
 queue = []
 heapq.heappush(queue,(0, start))
-time[start]] = 0
+time[start] = 0
 
 
 while(queue):
