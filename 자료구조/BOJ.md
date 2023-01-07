@@ -92,7 +92,7 @@ Z(0, 0, 2 ** N)
 ### 나는야 포켓몬 마스터 이다솜[1620] *시간초과* <br>
 
 해당 문제를 봐서 key, value로 이루어진 딕셔너리를 사용한다면 쉽게 풀 수 있을 것 같았다. 하나의 딕셔너리를 만들어서 key로 name을 보관하고 value로 index를 보관하려고했었다. 그러나 value를 가지고 key를 찾아야하는 경우에 value를 가지고 있는 key를 역으로 찾는 과정이 어렵기 때문에 items list를 받아서 for문을 돌면서 체크하려고 했다. <br>
-따라서 딕셔너리를 사용해서 for문을 돌면서 다 비교해도 되지 않는다는 장점을 살려야하는데 그것을 살릴 수 없게끔 코드가 작성되었다. <br>
+따라서 딕셔너리를 사용해서 in 연산자를 사용하면 시간복잡도를 줄일 수 있기에, for문을 돌면서 다 비교해도 되지 않는다는 장점을 살려야하는데 그것을 살릴 수 없게끔 코드가 작성되었다. <br>
 ~~~
 import sys
 input = sys.stdin.readline
@@ -116,7 +116,7 @@ for i in range(m):
 ~~~
 
 [해결방법]<br>
-그렇다면 name을 통해서 number를 찾고 number를 통해서도 key를 찾을 수 있도록 2개의 딕셔너리를 만들어야겠다고 생각했다. 그렇다면 for문을 돌리지 않아도 된다. <br>
+그렇다면 name을 통해서 number를 찾고 number를 통해서도 key를 찾을 수 있도록 2개의 딕셔너리를 만들어야겠다고 생각했다. in 연산자를 사용한다면 for문을 돌리지 않아도 된다. 따라서 시간복잡도를 줄일 수 있게된다. <br>
 ~~~
 import sys
 input = sys.stdin.readline
@@ -139,4 +139,103 @@ for _ in range(m):
         print(key_num[ques])
 ~~~
 
-dictionary를 사용할 땐 "검색"과 같은 알고리즘을 작성할 때 유리하지만 그 장점을 살리기 위해서는 for문을 돌리지 않아야한다. 따라서 반드시 item을 기준으로 하나씩 돌리며 key와 value를 체크하는 경우가 필요한가? 에 대해서 코드를 작성할때 생각해보자!
+dictionary를 사용할 땐 "검색"과 같은 알고리즘을 작성할 때 유리하지만 그 장점을 살리기 위해서는 in 연산자를 적극 사용해서 for문을 돌리지 않아야한다. 따라서 반드시 item을 기준으로 하나씩 돌리며 key와 value를 체크하는 경우가 필요한가? 에 대해서 코드를 작성할때 생각해보자!
+
+------
+### 듣보잡 *시간초과*<br>
+
+두번에 걸쳐 입력받아진 string들 중에 공통된 string을 뽑아서 정렬하는 문제이다.<br>
+이때 "in"을 사용했는데 시간초과가 난 이유는 list에 in 연산을 적용했기 때문이다.<br>
+
+```
+import sys
+input = sys.stdin.readline
+
+n,m = map(int, input().split())
+
+list1 =[]
+list2 =[]
+
+
+for i in range(n):
+    list1.append(input().strip())
+for i in range(m):
+    temp = input().strip()
+    if temp in list1:
+        list2.append(temp)
+
+list2.sort()
+print(len(list2))
+for i in list2:
+    print(i)
+```
+
+[해결방법]
+in 연산을 사용하게 되는데 그 시간복잡도는 평균 O(n)으로 list의 개수에 in 연산이 의존하고 있다. 하지만 dictionary로 계산할 경우 in 연산을 사용하면 list의 개수에 의존하지 않고(크기에 상관없이) 일정한 연산을 ㅅ행하며 시간복잡도는 O(1)이다. <br>
+**in 연산을 사용할 때는 dictionary를 사용하자**<br>
+```
+import sys
+input = sys.stdin.readline
+
+n,m = map(int, input().split())
+
+list1 ={}
+list2 =[]
+
+
+for i in range(n):
+    list1[input().strip()]=i
+for i in range(m):
+    temp = input().strip()
+    if temp in list1.keys():
+        list2.append(temp)
+
+list2.sort()
+print(len(list2))
+for i in list2:
+    print(i)
+```
+list1을 dictionary로만 바꿨는데 시간초과가 해결되었다.<br>
+
+하지만 dictionary가 아니여도 풀 수 있다. 문제를 풀면서 두개의 교집합을 찾아내는 연산의 기능을 하는 method같은 것이 없나 찾아보았다. set을 사용해서 교집합을 얻을 수 있다.<br>
+*intersection*<br>
+
+- 만약 두개의 set set1, set2가 존재할때
+*& 연산자와 intersection method*를 사용한다<br>
+    ```
+    set.intersection(set1, set2)
+    ```
+    혹은 
+    ```
+     set1 & set2
+    ```
+- 만약 set1에 set2와의 교집합을 구하고 바로 set1에 update하고 싶을때
+    ~~~
+    set1 = {1,2,3}
+    set2 = {1,3}
+
+    set1.intersection_update(set2)
+    print(a)
+    ~~~
+    를 할경우 {1,2}로 교집합이 set1에 저장된다.
+
+집합의 교집합 메서드 혹은 연산자를 사용한다면 쉽게 풀 수 있을 것이다.
+```
+import sys
+input = sys.stdin.readline
+
+n,m = map(int, input().split())
+
+set1 = set()
+set2 = set()
+
+for i in range(n):
+    set1.add(input().strip())
+for i in range(m):
+    set2.add(input().strip())
+
+result = sorted(list(set1 & set2))
+print(len(result))
+for i in result:
+    print(i)
+```
