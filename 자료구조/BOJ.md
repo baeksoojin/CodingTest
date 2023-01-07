@@ -1,6 +1,6 @@
-# BOJ 자료구조 오답풀이
+## BOJ 자료구조 오답풀이
 
-## Z [1074]
+### Z [1074] *시간초과*
 
 idea) 2*2에서 가장 왼쪽 위의 숫자만 알면 모두 알 수 있게 됨.<br>
 8은 8//2 = 4 -> 4//2 = 2 로 쪼개서 생각하고 (2,2)의 행렬로 분할되었다면 멈춤<br>
@@ -88,5 +88,55 @@ res = 0
 Z(0, 0, 2 ** N)
 
 ```
+---
+### 나는야 포켓몬 마스터 이다솜[1620] *시간초과* <br>
 
+해당 문제를 봐서 key, value로 이루어진 딕셔너리를 사용한다면 쉽게 풀 수 있을 것 같았다. 하나의 딕셔너리를 만들어서 key로 name을 보관하고 value로 index를 보관하려고했었다. 그러나 value를 가지고 key를 찾아야하는 경우에 value를 가지고 있는 key를 역으로 찾는 과정이 어렵기 때문에 items list를 받아서 for문을 돌면서 체크하려고 했다. <br>
+따라서 딕셔너리를 사용해서 for문을 돌면서 다 비교해도 되지 않는다는 장점을 살려야하는데 그것을 살릴 수 없게끔 코드가 작성되었다. <br>
+~~~
+import sys
+input = sys.stdin.readline
+n ,m = map(int,input().split())
+pocketmons = {}
 
+for i in range(1,n+1):
+    name = input().strip()
+    pocketmons[name] = str(i)
+
+for i in range(m):
+    question = input().strip()
+
+    for p in pocketmons.items():
+        if question == p[0]:
+            print(p[1])
+            break
+        if question == p[1]:
+            print(p[0])
+            break
+~~~
+
+[해결방법]<br>
+그렇다면 name을 통해서 number를 찾고 number를 통해서도 key를 찾을 수 있도록 2개의 딕셔너리를 만들어야겠다고 생각했다. 그렇다면 for문을 돌리지 않아도 된다. <br>
+~~~
+import sys
+input = sys.stdin.readline
+n ,m = map(int,input().split())
+
+key_name = {} # 이름을 입력했을 때 숫자가 나오도록
+key_num = {} # 숫자를 입력했을 때 이름이 나오도록
+
+for i in range(1,n+1):
+    name = input().strip()
+    key_name[name] = str(i)
+    key_num[str(i)] = name
+
+for _ in range(m):
+    ques = input().strip()
+    # 이름으로 입력받을 때
+    if ques in key_name.keys():
+        print(key_name[ques])
+    else:
+        print(key_num[ques])
+~~~
+
+dictionary를 사용할 땐 "검색"과 같은 알고리즘을 작성할 때 유리하지만 그 장점을 살리기 위해서는 for문을 돌리지 않아야한다. 따라서 반드시 item을 기준으로 하나씩 돌리며 key와 value를 체크하는 경우가 필요한가? 에 대해서 코드를 작성할때 생각해보자!
