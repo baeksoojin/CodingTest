@@ -239,3 +239,145 @@ print(len(result))
 for i in result:
     print(i)
 ```
+------
+### 토마토[7576] 시간초과
+
+idea) bfs를 사용하는데 for문을 돌면서 입력값이 1일때 해당 위치에서 bfs를 실행하게끔 하였다. 만약 1이 두번일때는 첫번째 1을 만났을 때 bfs를 한번 실행하여 while문을 실행하여 tomato에 대한 상태값이 모두 업데이트된다. 하지만 두번째 1이 첫번째 1의 결과로 나온 tomato가 익은 날짜보다 더 빠르게 익었을 수도 있기때문에 첫번째 1이 나왔을때의 특정 자리에서 익은 토마토가 익기 위해서 걸리 날짜와 현재 그 자리의 토마토가 익기 위해서 걸린 날짜를 비교해서 더 작은 값을 update해주었다. <br>
+
+~~~
+import sys
+from collections import deque
+
+input = sys.stdin.readline
+
+n,m = map(int, input().split())
+
+tomato = []*(m)
+for i in range(m):
+    tomato.append(list(map(int, input().split())))
+
+map_list = [(-1,0),(+1,0),(0,-1),(0,+1)] # 상하좌우 이동
+
+def tomato_bfs(x,y,count_list):
+
+    visited =[[False]*(n) for _ in range(m)]
+        
+    queue = deque([])
+    queue.append((x,y))
+
+    count = deque([])
+    count.append(0)
+
+    visited[x][y]=False
+    count_list[x][y] = 0
+
+    while(queue):
+        
+        x,y = queue.popleft()
+        c = count.popleft()
+
+        for map in map_list:
+            a,b = map
+            next_x = x +a
+            next_y = y +b
+            
+            if next_x >m-1 or next_x<0 or next_y > n-1 or next_y<0:
+                continue
+            elif tomato[next_x][next_y] == -1:
+                continue
+            else: #갈 수 있을 경우 min값을 비교하는 조건고려
+                if visited[next_x][next_y]==False and c+1 < count_list[next_x][next_y]:
+                    #print(next_x,next_y)
+                    visited[next_x][next_y]==True
+                    count_list[next_x][next_y] = c+1
+                    queue.append((next_x, next_y))
+                    count.append(c+1)
+    return count_list
+
+INF = int(1e10)
+count_list =[[INF]*(n) for _ in range(m)]
+for i in range(m):
+    for j in range(n):
+        if tomato[i][j]==1:
+            count_list = tomato_bfs(i,j,count_list)
+
+# min값으로 비교하는 것을 추가해야함
+
+# 다 익을 수 없는 경우
+if 0 in tomato:
+    print("-1")
+else:
+    result = []
+    for i in range(m):
+        result += count_list[i]
+    result = list(set(result))
+    result.remove(INF)
+    print(max(result))
+~~~
+그러나 시간적인 측면에서 본다면 1이 나올때마다 bfs를 한번 호출하게 되어 비효율적이다.<br>
+어떻게 시간초과를 해결할 수 있을까? 1이 나올때의 값을 deque에 넣고 bfs를 한번만 호출하게 하고 day를 담는 count_list를 없애고 counting값을 늘리면서 방문한 곳은 방문하지 않도록하여 자연스럽게 deque에 담긴 곳이 없을때의 counting값이 모두 익는데 걸리는 최솟값이 된다.<br>
+
+[해결방법]<br>
+count_list를 업데이트 하기보다는 입력받은 값이 1일때의 위치를 deque에 모두 저장하고 또 다른 deque를 만들어서 day counting값을 저장한다. 때문에 해당 bfs에서 counting값이 level과 같은 것으로 이해한다면 level이 같은 것으로 본다면 각 레벨은 *동시에 실행(즉, 동시에 상하좌우를 익힌다)*한다라고 이해하면 될 것이다.
+~~~
+import sys
+from collections import deque
+from tabnanny import check
+
+input = sys.stdin.readline
+
+n,m = map(int, input().split())
+
+tomato = []*(m)
+for i in range(m):
+    tomato.append(list(map(int, input().split())))
+
+map_list = [(-1,0),(+1,0),(0,-1),(0,+1)] # 상하좌우 이동
+
+visited =[[False]*(n) for _ in range(m)]
+queue = deque([])
+counting = deque([])
+def tomato_bfs(queue, counting):
+    count = 0
+    while(queue):
+        
+        x,y = queue.popleft()
+        count = counting.popleft()
+
+        for map in map_list:
+            a,b = map
+            next_x = x +a
+            next_y = y +b
+            
+            if next_x >m-1 or next_x<0 or next_y > n-1 or next_y<0:
+                continue
+            else: 
+                if visited[next_x][next_y]==False:
+                    visited[next_x][next_y]=True
+                    queue.append((next_x, next_y))
+                    counting.append(count + 1)
+    return count
+
+
+INF = int(1e10)
+for i in range(m):
+    for j in range(n):
+        if tomato[i][j]==1:
+            queue.append((i,j))
+            counting.append(0)
+            visited[i][j]=True
+        if tomato[i][j]==-1:
+            visited[i][j] = True
+result = tomato_bfs(queue,counting)
+
+def check_minus():
+    for v in visited:
+        if False in v:
+            return 1
+    return 0
+
+if check_minus():
+    print("-1")
+else:
+    print(result)
+~~~
