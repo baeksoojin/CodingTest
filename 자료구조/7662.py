@@ -19,30 +19,44 @@ input = sys.stdin.readline
 
 n = int(input())
 
+
 for _ in range(n):
 
     minh = []
     maxh =[]
     
     count = int(input())
-    for _ in range(count):
+    visited = [False]*count
+    for key in range(count):
         o, num = map(str,input().split())
         if o=="I":
-            heapq.heappush(minh, int(num))
-            heapq.heappush(maxh, -int(num))
+            heapq.heappush(minh, (int(num),key))
+            heapq.heappush(maxh, (-int(num),key))
+            visited[key] = True
         else:
-            if len(minh)==0:
-                continue
             if num == "-1": #최솟값을 삭제
-                del_num = heapq.heappop(minh)
-                maxh.remove(-del_num)
+                while minh and not visited[minh[0][1]]:
+                    heapq.heappop(minh)
+                if minh:
+                    visited[minh[0][1]] = False
+                    heapq.heappop(minh)
+                    
             else:#최댓값을 삭제
-                del_num = -heapq.heappop(maxh)
-                minh.remove(del_num)
+                while maxh and not visited[maxh[0][1]]:
+                    heapq.heappop(maxh)
+                if maxh:
+                    visited[maxh[0][1]] = False
+                    heapq.heappop(maxh) 
+                    
+
+    while minh and not visited[minh[0][1]]:
+        heapq.heappop(minh)
+    while maxh and not visited[maxh[0][1]]:
+        heapq.heappop(maxh)
     
     if not minh:
         print("EMPTY")
     else:
-        max = -heapq.heappop(maxh)
-        min = heapq.heappop(minh)
-        print(max, min)
+        max,key1 = heapq.heappop(maxh)
+        min,key2 = heapq.heappop(minh)
+        print(-max, min)

@@ -1,6 +1,6 @@
 ## BOJ 자료구조 오답풀이
 
-### Z [1074] *시간초과*
+### Z [1074] *메모리초과*
 
 idea) 2*2에서 가장 왼쪽 위의 숫자만 알면 모두 알 수 있게 됨.<br>
 8은 8//2 = 4 -> 4//2 = 2 로 쪼개서 생각하고 (2,2)의 행렬로 분할되었다면 멈춤<br>
@@ -381,3 +381,116 @@ if check_minus():
 else:
     print(result)
 ~~~
+
+----
+### 이중 우선순위 큐 *시간초과*
+
+idea) heapq 두개 사용해서 최솟값이랑 최댓값을 뽑아내고 하나의 수가 삭제됐을 때 다른 heapq에서 해당 수를 제거해야한다고 생각하였다. 따라서 heapq를 list를 사용한 것이기에 list의 remove method를 사용하면 되겠다고 생각하였다.<br>
+
+```
+import sys
+import heapq
+input = sys.stdin.readline
+
+n = int(input())
+
+for _ in range(n):
+
+    minh = []
+    maxh =[]
+    
+    count = int(input())
+    for _ in range(count):
+        o, num = map(str,input().split())
+        if o=="I":
+            heapq.heappush(minh, int(num))
+            heapq.heappush(maxh, -int(num))
+        else:
+            if len(minh)==0:
+                continue
+            if num == "-1": #최솟값을 삭제
+                del_num = heapq.heappop(minh)
+                maxh.remove(-del_num)
+            else:#최댓값을 삭제
+                del_num = -heapq.heappop(maxh)
+                minh.remove(del_num)
+    
+    if not minh:
+        print("EMPTY")
+    else:
+        max = -heapq.heappop(maxh)
+        min = heapq.heappop(minh)
+        print(max, min)
+
+```
+
+그러나 문제를 풀고 시간초과가 떠서 확인해보니 remove method를 사용해서는 안 됐다.<br>
+remove의 시간복잡도는 O(N)이다. for문을 n번 돌면서 찾아내는 것을 의미하는데 따라서 시간초과가 난 것 같아서 remove가 아닌 다른 방법을 생각해냈어야 했다.<br>
+
+[해결방법]<br>
+따라서 값을 힙에 저장할때 값과 함께 그 값을 구분해줄 숫자를 함께 넣어서 해당 값이 빠졌는지 아직 있는지를 체크하도록 한다.<br>
+```
+if o=="I":
+    heapq.heappush(minh, (int(num),key))
+    heapq.heappush(maxh, (-int(num),key))
+```
+바로 위의 for문에서 index를 사용할 일이 없어서 _ 처리를 하였는데 이를 key로 바꾸고 위의 코드처럼 변경하도록하여 tuple을 각 heap에 저장한다.<br>
+key값이 True일때 해당 값이 존재하는 것이고 만약 둘중 하나의 heap에서 값이 삭제됐다고 한다면 다른 하나의 heap에서도 삭제 되어야하기에 False로 만든다. 따라서 각 heap에서는 상대heap에 의해서 삭제된 원소인지 체크하고(False일때) 그 값이 가장 첫번째 원소에 있을 때 해당 값은 상대에 의해서 이미 제거된 값이기에 역시 해당 Heap에서도 제거해준다.<br>
+```
+while heap and not visited[heap[0][1]]:
+    heapq.heappop(heap)
+```
+다음과 같은 코드를 최소힙, 최대힙에서 적용시켜야한다<br>
+~~~
+
+import sys
+import heapq
+input = sys.stdin.readline
+
+n = int(input())
+
+
+for _ in range(n):
+
+    minh = []
+    maxh =[]
+    
+    count = int(input())
+    visited = [False]*count
+    for key in range(count):
+        o, num = map(str,input().split())
+        if o=="I":
+            heapq.heappush(minh, (int(num),key))
+            heapq.heappush(maxh, (-int(num),key))
+            visited[key] = True
+        else:
+            if num == "-1": #최솟값을 삭제
+                while minh and not visited[minh[0][1]]:
+                    heapq.heappop(minh)
+                if minh:
+                    visited[minh[0][1]] = False
+                    heapq.heappop(minh)
+                    
+            else:#최댓값을 삭제
+                while maxh and not visited[maxh[0][1]]:
+                    heapq.heappop(maxh)
+                if maxh:
+                    visited[maxh[0][1]] = False
+                    heapq.heappop(maxh) 
+                    
+
+    while minh and not visited[minh[0][1]]:
+        heapq.heappop(minh)
+    while maxh and not visited[maxh[0][1]]:
+        heapq.heappop(maxh)
+    
+    if not minh:
+        print("EMPTY")
+    else:
+        max,key1 = heapq.heappop(maxh)
+        min,key2 = heapq.heappop(minh)
+        print(-max, min)
+~~~
+
+list에서 pop(i), remove, insert, del, in 모두 시간복잡도는 O(N)으로 하나의 숫자를 찾거나 없애거나 넣을때 for문을 돌면서 하나씩 비교하며 업데이트 된다고 생각하면 된다. 따라서 method를 쓴다고해서 시간복잡도를 줄이는 것이 되지 않는다. <br>
+해당 사항을 주의하면서 문제플 풀어야겠다.
