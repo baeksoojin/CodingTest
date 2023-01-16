@@ -19,12 +19,27 @@ n_list.append(0)
 for i in range(n):
     n_list.append(int(input()))
 
-result=[0]*(n+1)
-result[0] = 0
-result[1] = n_list[1]
-result[2] = n_list[1]+n_list[2]
+result=[0]*(301)
+if n==1:
+    print(n_list[1])
+else:
+        
+    result[0] = 0
+    result[1] = n_list[1]
+    result[2] = n_list[1]+n_list[2]
 
-for i in range(3,n+1):
-    result[i] = max(n_list[i-1]+result[i-3], result[i-2] )+ n_list[i]
-    print( result,max(n_list[i-1]+result[i-3], result[i-2]), i,result[i])
-print(result[n])
+    for i in range(3,n+1):
+        result[i] = max(n_list[i-1]+result[i-3], result[i-2] )+ n_list[i]
+        # print( result,max(n_list[i-1]+result[i-3], result[i-2]), i,result[i])
+    print(result[n])
+
+'''
+
+runtime error
+
+맞았는 줄 알았는데 다시 보니 100% 직전에 런타임에러가 떴다
+왜인지 몰랐는데 만약 1개의 계단이있다면? result[2]를 초기화하는 과정에서 n_list[2]의 값이 없기에 문제가 발생한다(index error)
+
+그 결과 맞았습니다!로 나온다.
+
+'''
