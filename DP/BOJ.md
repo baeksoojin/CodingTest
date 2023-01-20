@@ -102,3 +102,26 @@ print(c[-1])
 처음에는 배열의 값이 초기화되면 이전 값이 날라가서 처음에 짠 코드와 동일하지 않을까?했지만 정답으로 나와있어서 그럴 수는 없었다,,,ㅎㅎ<br>
 그래서 디버깅을 해보니, for문을 다 돌고나서 c[j]에 담겨져있는 것들이 모두 c=[~~~]로 인해서 갱신된다는 것을 알게 되었다.<br>
 이차원 배열이 아닌 위와 같이 배열 초기화를 미루는 방식으로 코드를 작성해도 고민했던 문제를 해결할 수 있다는 것을 알게 되었다 :)
+
+<br>
+코딩테스트 스터디 중에 다른 코드가 공유됐는데 가장 효율적이고 이해하기 좋은 방법인 것 같다!!
+
+~~~
+import sys
+input =sys.stdin.readline
+
+n, k = map(int, input().split())
+arr = []
+for _ in range(n):
+    arr.append(tuple(map(int, input().split())))
+
+dp = [0]*(k+1)
+
+        
+for w, v in arr:
+    for i in range(k, w-1, -1):
+        dp[i] = max(dp[i], dp[i-w]+v)
+print(dp[-1])
+~~~
+
+이렇게 하게 되면 이전에 반례를 해결할 수 있다. 뒤에서부터 update를 해줘야 이전에 담겨있는 bag의 무게에 대한 가치값을 활용해서 update가 가능하기 때문에 같은 index(temp)라도 다른 값이 들어온 경우 temp다음의 index에서 temp에서 가진 이전의 value값을 사용할 수 있기때문이다.

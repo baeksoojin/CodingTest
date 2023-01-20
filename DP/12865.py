@@ -1,21 +1,38 @@
-import sys
-input = sys.stdin.readline
+# import sys
+# input = sys.stdin.readline
 
-n,m = map(int, input().split())
+# n,m = map(int, input().split())
 
-result = [[0]*(m+1) for _ in range(n+1)] # 2차원 랭렬로 변경
-bags = [(0,0)] # for문을 돌릴 때 1부터 Index를 사용
+# result = [[0]*(m+1) for _ in range(n+1)] # 2차원 랭렬로 변경
+# bags = [(0,0)] # for문을 돌릴 때 1부터 Index를 사용
 
-for i in range(n):
-    a,b = map(int,input().split())
-    bags.append((a,b))
+# for i in range(n):
+#     a,b = map(int,input().split())
+#     bags.append((a,b))
 
-for i in range(1,n+1):
-    for j in range(1,m+1):
-        if bags[i][0]>j:
-            result[i][j] = result[i-1][j]
-        else:
-            result[i][j] = max(result[i-1][j], bags[i][1]+ result[i-1][j-bags[i][0]])
+# for i in range(1,n+1):
+#     for j in range(1,m+1):
+#         if bags[i][0]>j:
+#             result[i][j] = result[i-1][j]
+#         else:
+#             result[i][j] = max(result[i-1][j], bags[i][1]+ result[i-1][j-bags[i][0]])
         
 
-print(result[n][m])
+# print(result[n][m])
+
+
+import sys
+input =sys.stdin.readline
+
+n, k = map(int, input().split())
+arr = []
+for _ in range(n):
+    arr.append(tuple(map(int, input().split())))
+
+dp = [0]*(k+1)
+
+        
+for w, v in arr:
+    for i in range(k, w-1, -1):
+        dp[i] = max(dp[i], dp[i-w]+v)
+print(dp[-1])
