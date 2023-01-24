@@ -33,5 +33,4 @@
 -----
 
 ## tear
-
 [![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=baeksujin)](https://solved.ac/baeksujin/)
