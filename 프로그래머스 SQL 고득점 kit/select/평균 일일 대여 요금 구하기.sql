@@ -1,0 +1,5 @@
+SELECT ROUND(AVG(DAILY_FEE),0) as AVERAGE_FEE 
+FROM CAR_RENTAL_COMPANY_CAR 
+WHERE CAR_TYPE="SUV";
+
+# round(반올림할 값의 column, 반올림해서 만들 자리수)
