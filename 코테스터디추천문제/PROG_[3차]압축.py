@@ -49,4 +49,12 @@ solution("TOBEORNOTTOBEORTOBEORNOT")
 정확히 34분걸림 -> 4분 오바함.
 문자열 다루기 더 연습하기...!
 
+
+문자열 다루기에서 핵심 포인트!!!
+
+문자와 숫자를 변환할때는 ord method, chr method를 사용한다.
+
+1. ord('a') => 97
+2. chr(97) =>'a'
+
 '''
