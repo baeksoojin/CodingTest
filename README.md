@@ -5,7 +5,7 @@
 ## 학습 계획
 
 **방학계획**
-1. 이것이 코딩테스트다 책 활용 개념 익히기
+1. ~~이것이 코딩테스트다 책 활용 개념 익히기~~ [완료]
 2. ~~baekjoon 문제풀기 class 3 모든 문제 풀기~~ [완료]
 3. 프로그래머스 고득점 kit 연습
 - [sql](https://github.com/baeksoojin/CodingTest/tree/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%20SQL%20%EA%B3%A0%EB%93%9D%EC%A0%90%20kit#readme)
