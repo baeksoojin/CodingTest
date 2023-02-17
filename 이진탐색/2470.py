@@ -66,6 +66,8 @@ def find_min(start, end):
     
     if total < 0:
         start += 1
+    elif total==0:
+        return n_list[start], n_list[end]
     else:
         end -=1
     
