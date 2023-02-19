@@ -1,0 +1,20 @@
+
+select MEMBER_NAME , REVIEW_TEXT, date_format(REVIEW_DATE,"%Y-%m-%d") as REVIEW_DATE
+from REST_REVIEW
+join (
+    SELECT R.MEMBER_ID as MEMBER_ID , M.MEMBER_NAME as MEMBER_NAME, RANK() OVER(ORDER BY CNT DESC) AS RANKING
+    FROM (
+        SELECT *, COUNT(MEMBER_ID) AS CNT
+        FROM REST_REVIEW
+        GROUP BY MEMBER_ID) AS R
+    JOIN MEMBER_PROFILE M ON R.MEMBER_ID = M.MEMBER_ID
+) RankingT
+on RankingT.MEMBER_ID = REST_REVIEW.MEMBER_ID
+where RankingT.RANKING=1
+order by REVIEW_DATE,REVIEW_TEXT;
+'''
+
+<구문정리>
+rank() over(order by 기준 desc/asc) as ranking
+
+'''
