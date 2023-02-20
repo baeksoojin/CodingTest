@@ -6,5 +6,5 @@
 ~~2. sum,max,min~~[완료]<br>
 ~~3. group by~~[완료]<br>
 ~~4. is null~~[완료]<br>
-5. join(중요)<br>
+~~5. join(중요)~~[완료]<br>
 6. string,date<br>
