@@ -56,7 +56,7 @@ def recursive(n,k,before_len):
         recursive(n,k+1,len_temp)
     
 
-# n = int(input())
+n = int(input())
 recursive(n,1,3)
     
 
