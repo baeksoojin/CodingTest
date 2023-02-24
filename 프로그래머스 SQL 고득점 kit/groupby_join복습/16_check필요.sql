@@ -1,0 +1,14 @@
+'''
+년, 월, 성별 별 상품 구매 회원 수 구하기
+
+DISTINCT -> 그룹핑을 한 그룹안에서 한 사람이 여러번 구매할 수 있으니까 distinct를 해줘야함!!
+
+그냥 무조건 distinct를 해준다고 하자!!
+'''
+
+SELECT YEAR(SALES_DATE) as YEAR, MONTH(SALES_DATE) AS MONTH, GENDER, COUNT(DISTINCT U.USER_ID) AS COUNT
+FROM USER_INFO AS U
+JOIN ONLINE_SALE AS O ON U.USER_ID = O.USER_ID
+WHERE GENDER IS NOT NULL
+GROUP BY YEAR, MONTH, GENDER 
+ORDER BY YEAR, MONTH, GENDER
