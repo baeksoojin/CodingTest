@@ -1,0 +1,20 @@
+'''없어진 기록 찾기
+
+out 기록은 있지만 in기록이 없어진 경우
+'''
+
+select O.ANIMAL_ID, NAME
+from ANIMAL_OUTS as O
+where O.ANIMAL_ID not in (
+    select ANIMAL_ID
+    from ANIMAL_INS)
+
+-- join 
+
+
+SELECT A.ANIMAL_ID, A.NAME
+FROM ANIMAL_OUTS A 
+LEFT JOIN ANIMAL_INS B ON A.ANIMAL_ID=B.ANIMAL_ID 
+WHERE A.ANIMAL_ID IS NOT NULL
+AND B.ANIMAL_ID IS NULL
+order by A.ANIMAL_ID
