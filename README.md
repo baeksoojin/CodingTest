@@ -9,13 +9,20 @@
 2. ~~baekjoon 문제풀기 class 3 모든 문제 풀기~~ [완료]
 3. 프로그래머스 고득점 kit 연습
 - [sql](https://github.com/baeksoojin/CodingTest/tree/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%20SQL%20%EA%B3%A0%EB%93%9D%EC%A0%90%20kit#readme)
-- algorithm
+- [algorithm](https://github.com/baeksoojin/CodingTest/tree/main/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%20%EA%B3%A0%EB%93%9D%EC%A0%90kit)
 4. 구현, 문자열 다루기를 30분안에 푸는 연습이 부족 => 프로그래머스 level1 약 90문제 풀기 -> 1학기에 
 
 **2023-1학기 계획**
 1. 이것이 코딩테스트다 책 활용 2020 상반기 기출문제 풀기
 2. baekjoon class3 틀렸던 문제 다시 풀기
 3. 프로그래머스 kakao 기출문제 모음(2017 ~ 2023 기출) 25문제 풀기
+
+**부족한부분**<br>
+시뮬레이션(빡구현)이 많이 나오는 추세<br>
+[삼성SW역량테스트](https://www.acmicpc.net/workbook/view/1152) 기출 반복<br>
+
+1. 1회독
+2. 2회독
 
 -----
 
