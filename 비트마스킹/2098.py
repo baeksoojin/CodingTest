@@ -19,20 +19,21 @@ graph =[]
 for i in range(n):
     graph.append(list(map(int, input().split())))
 
-dp =[[INF]*(1<<n) for _ in range(n)]
+dp =[[None]*(1<<n) for _ in range(n)]
 
-
+visited_all = (1<<n)-1
 def dfs(x,visited):
 
-    if visited==(1<<n)-1:#마지막 depth에서 체크
+    if visited==visited_all:#마지막 depth에서 체크
         if graph[x][0]!=0:
             return graph[x][0]
         else:
             return INF
     
-    if dp[x][visited]!=INF:#이미 최솟값이 존재하는 경우
+    if dp[x][visited]!=None:#이미 최솟값이 존재하는 경우
         return dp[x][visited]
 
+    temp =INF
     for i in range(1,n):
 
         if not graph[x][i]:
@@ -40,8 +41,9 @@ def dfs(x,visited):
         if visited & (1<<i):
             continue
 
-        dp[x][visited] = min(dp[x][visited], dfs(i,visited | (1<<i))+graph[x][i])
-
+        temp = min(temp, dfs(i,visited | (1<<i))+graph[x][i])
+    
+    dp[x][visited] = temp
 
     return dp[x][visited]
 
