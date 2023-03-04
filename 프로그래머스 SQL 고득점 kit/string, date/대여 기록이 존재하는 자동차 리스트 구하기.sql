@@ -1,0 +1,5 @@
+SELECT distinct C.CAR_ID
+from CAR_RENTAL_COMPANY_CAR as C
+join CAR_RENTAL_COMPANY_RENTAL_HISTORY as H on H.CAR_ID = C.CAR_ID
+where START_DATE like "2022-10-%" and C.CAR_TYPE = '세단'
+order by CAR_ID desc;
