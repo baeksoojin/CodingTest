@@ -4,9 +4,6 @@
 다시체크
 '''
 
--- select 
--- from 
-
 -- 우선 대여가능한 차의 목록을 뽑아내기
 
 select C.CAR_ID, C.CAR_TYPE, Round(C.DAILY_FEE*30*(100-D.DISCOUNT_RATE)/100) as FEE
