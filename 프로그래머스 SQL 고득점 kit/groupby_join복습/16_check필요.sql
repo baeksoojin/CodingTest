@@ -3,6 +3,8 @@
 
 DISTINCT -> 그룹핑을 한 그룹안에서 한 사람이 여러번 구매할 수 있으니까 distinct를 해줘야함!!
 
+=> COUNT(DISTINCT U.USER_ID)
+
 그냥 무조건 distinct를 해준다고 하자!!
 '''
 

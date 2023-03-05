@@ -3,6 +3,9 @@
 
 
 ranking을 count값으로 설정
+
+rank over(order by cnt desc) as ranking => 보통 desc를 사용해주는 경우가 많음 ranking은 많을 수록 1위인경우가 현실에서 더 많으니//
+.ranking=1 -> 랭킹 1번을 사용.
 '''
 
 select M2.MEMBER_NAME, REVIEW_TEXT, date_format(REVIEW_DATE,"%Y-%m-%d") as REVIEW_DATE

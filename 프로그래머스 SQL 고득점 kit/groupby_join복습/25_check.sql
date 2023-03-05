@@ -1,6 +1,8 @@
 '''
 상품을 구매한 회원 비율 구하기
 
+COUNT(DISTINCT ONLINE.user_id) PUCHASED_USERS,
+
 '''
 
 
