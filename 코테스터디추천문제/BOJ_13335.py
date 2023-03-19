@@ -9,7 +9,6 @@
 시간당 한칸씩 움직여야하니까 만약에 트럭이 못 올라오는 경우라면 queue에 0을 넣어주기
 queue에 값 하나씩 넣으면서 왼쪽으로 옮기기 -> 만약 큐의 길이가 w가 된다면 가장 가까운 것을 제거
 
-
 '''
 
 # 모든 트럭들이 다리를 건너는 최단시간을 출력
@@ -20,8 +19,7 @@ n,w,L = map(int, input().split())
 
 trucks = list(map(int, input().split()))
 queue1 = deque(trucks)
-bridge = deque([]) 
-moving = deque([])
+bridge = deque([])
 time=0
 
 while(queue1 or bridge):
