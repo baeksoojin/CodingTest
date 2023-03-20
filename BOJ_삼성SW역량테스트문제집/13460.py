@@ -22,7 +22,7 @@ n,m = map(int, input().split())
 b_queue = deque([])
 r_queue = deque([]) 
 
-visited = [[[[False]*(m) for _ in range(n)] for _ in range(m)] for _ in range(m)]
+visited = [[[[False]*(m) for _ in range(n)] for _ in range(m)] for _ in range(n)]
 
 # 상,하,좌,우
 move = [(-1,0),(1,0),(0,-1),(0,1)]
