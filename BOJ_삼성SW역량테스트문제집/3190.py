@@ -1,5 +1,5 @@
 '''
-1시50분 시작 -> 2시 48분 제출시 런타임에러
+1시50분 시작 -> 2시 48분 제출시 런타임에러 -> 변경 후 틀렸습니다. -> get_tail을 수정해서 성공
 
 벽 또는 자기자신의 몸과 부딪히면 게임 끝
 
@@ -72,15 +72,6 @@ def get_dir(time): # return dirs의 index
 --> 위일때 왼쪽으로 회전한다면? -1인 index가 됐다면 3으로 변경
 
 '''
-
-# def get_tail(x,y):
-    
-#     for i in range(4):# 4방향중에서 하나는 뱀의 일부가 있을 것
-#         next_x = x+dirs[i][0]
-#         next_y = y+dirs[i][1]
-
-#         if board[next_x][next_y]==1:
-#             return (next_x, next_y)
 
 # 이동한 경로를 모두 저장해줘야함 -> 머리가 이동한 경로를 저장하고 앞의 것을 꺼내며니서 tail을 변경
 def get_tail():
