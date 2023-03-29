@@ -12,10 +12,12 @@ if) 사과가 없다면 -> 이동한 칸만 뱀의 위치를 표시(1로 표시)
 
 '''
 
+from collections import deque
+
 
 n= int(input())# 보드의 크기
 
-board = [[0]*(101) for _ in range(101)]
+board = [[0]*(120) for _ in range(120)]
 
 k = int(input()) #사과의 개수
 for i in range(k):
@@ -23,7 +25,7 @@ for i in range(k):
     board[a][b] = 2 # 사과가 있는 곳을 2라고함
 
 l = int(input())# 뱀의 방향 변환 횟수
-l_list = [False]*(10002) # 뱀이 방향을 변하는 정보를 담음
+l_list = [False]*(10020) # 뱀이 방향을 변하는 정보를 담음
 
 for i in range(l):
     time,dir = input().split()
@@ -32,7 +34,9 @@ for i in range(l):
 
 time = 1
 hx,hy = 1,1 # 뱀의 머리 위치
-tx,ty = 1,1 # 뱀의 꼬리 위치
+# 꼬리를 모두 queue에 저장하고 하나 없앨때마다 popleft()를 진행
+tail = deque()
+tail.append((hx,hy))
 board[1][1]=1 # 뱀의 위치를 기록
 
 
@@ -69,21 +73,27 @@ def get_dir(time): # return dirs의 index
 
 '''
 
-def get_tail(x,y):
+# def get_tail(x,y):
     
-    for i in range(4):# 4방향중에서 하나는 뱀의 일부가 있을 것
-        next_x = x+dirs[i][0]
-        next_y = y+dirs[i][1]
+#     for i in range(4):# 4방향중에서 하나는 뱀의 일부가 있을 것
+#         next_x = x+dirs[i][0]
+#         next_y = y+dirs[i][1]
 
-        if board[next_x][next_y]==1: # 뱀이 있는 있는 곳으로 이동
-            return (next_x, next_y)
+#         if board[next_x][next_y]==1:
+#             return (next_x, next_y)
 
+# 이동한 경로를 모두 저장해줘야함 -> 머리가 이동한 경로를 저장하고 앞의 것을 꺼내며니서 tail을 변경
+def get_tail():
 
+    tail.popleft()
+    return tail[0]
+    
 while(1):
 
     # 다음으로 이동할 방향을 구함
     dir = dirs[get_dir(time)]
     hx, hy = hx+ dir[0], hy+dir[1]
+    tx, ty = tail[0]
 
 
     # 멈추는 조건 적용
@@ -99,11 +109,13 @@ while(1):
     if board[hx][hy] ==2:# 사과가 존재
         # 사과를 먹고 1로 만들기(뱀의 자리로)
         board[hx][hy] = 1
+        tail.append((hx,hy))
     else: # 사과가 없었다면 꼬리의 가장 마지막 부분을 0으로 변경
         board[hx][hy] = 1
         board[tx][ty] = 0
+        tail.append((hx,hy))
         # 꼬리를 이동시켜줘야함
-        tx,ty = get_tail(tx,ty)
+        tx,ty = get_tail()
         
 
     # time+1
