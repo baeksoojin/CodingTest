@@ -36,5 +36,40 @@ k_list = list(map(int, input().split()))
 
 
 # 주사위의 값을 저장
+box_list = [4,1,3,2,5,6]
+
+# 주사위의 번호에 적힌 값을 초기화
+box = {"1" : 0 ,
+        "2" : 0 ,
+        "3" : 0 ,
+        "4" : 0 ,
+        "5" : 0 ,
+        "6" : 0 ,
+        } #초기화 진행 
+
+step = [-1,(0,1),(-1,0),(-1,0),(1,0)] # 차례대로 동서북남을 의미. -> k값으로 접근
+
+
+def change(k):
+    if k==1: # 동쪽으로 이동시키는 경우
+        # box_list의 index값을 가지고 다음 위치를 만들어줌
+        change_index = [5, 0, 1, 3, 4, 2 ]# 예를들어서 기존에 3이있던 곳에 1을 넣어야하는데 1이 있는 index는 1이니까 1을 넣어줌.
+        for i in range(len(change_index)):
+            box_list[i] = box_list[change_index[i]]
+
+
+for i in k_list:
+    
+    # 주사위를 굴리기
+    next_x = x + step[i][0]
+    next_y = x + step[i][1]
+
+    # 굴리면서 변경된 면을 update해주는 로직작성
+    
+
+
+    # 이동한 위치의 지도값이 0인지 판단
+    if map_list[next_x][next_y]==0:#지도가 0이라면
+        # 주사위의 바닥면에 쓰여있는 수가 지도에 복사됨
 
 
