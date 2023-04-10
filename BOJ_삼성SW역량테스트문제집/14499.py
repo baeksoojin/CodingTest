@@ -98,6 +98,7 @@ for k in k_list:
         else: # 맵의 수가 주사위의 바닥면으로 업데이트
             # print("주사위바닥수",box_list[-1])
             box[str(box_list[-1])] = map_list[next_x][next_y]
+            map_list[next_x][next_y] = 0 # 문제 조건 빼먹었었음 -> 문제 제대로 읽자....!!!!
             # print("update2")
         #상단에 적힌 값을 구하기
         print(box[str(box_list[1])])
