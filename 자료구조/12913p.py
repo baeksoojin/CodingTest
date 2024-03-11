@@ -14,7 +14,6 @@ https://school.programmers.co.kr/learn/courses/30/lessons/12913
 
 '''
 
-
 def solution():
 
     land = [[1,2,3,5],[5,6,7,8],[4,3,2,1]]
