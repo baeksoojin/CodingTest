@@ -1,25 +1,26 @@
 def solution(answers):
     answer = []
     
-    one_answer_list = [1,2,3,4,5]
-    two_answer_list = [2, 1, 2, 3, 2, 4, 2, 5]
-    three_answer_list = [ 3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    answer1 = [1,2,3,4,5]
+    answer2 = [ 2, 1, 2, 3, 2, 4, 2, 5]
+    answer3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
     
-    correct1 = correct2 = correct3 = 0
+    count1 = count2 = count3 = 0
     
     for i in range(len(answers)):
-        if answers[i] == one_answer_list[i%len(one_answer_list)]:
-            correct1+=1
-        if answers[i] == two_answer_list[i%len(two_answer_list)]:
-            correct2+=1
-        if answers[i] == three_answer_list[i%len(three_answer_list)]:
-            correct3+=1
+        if answers[i] == answer1[i%len(answer1)]:
+            count1 +=1
+        if answers[i] == answer2[i%len(answer2)]:
+            count2 +=1
+        if answers[i] == answer3[i%len(answer3)]:
+            count3 +=1
             
-    values = [correct1, correct2, correct3]
-    max_value = max(values)
+    max_count = max([count1,count2, count3])
+    index = 1
+    for count in [count1,count2, count3]:
+        if count == max_count:
+            answer.append(index)
+        index+=1
     
-    for i in range(3):
-        if max_value == values[i]:
-            answer.append(i+1)
     
     return answer
