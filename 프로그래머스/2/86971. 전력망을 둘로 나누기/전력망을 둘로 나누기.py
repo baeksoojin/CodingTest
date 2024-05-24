@@ -1,48 +1,57 @@
-'''
-solve 2
-'''
-
 from collections import deque
 
-def bfs(linked_list, current, not_go):
+def bfs(node, graph):
+    
     
     queue = deque()
-    visited = [0]*len(linked_list)
-    queue.append((current, 1))
-    visited[current]=1
+    visited = [False] * 101
+    queue.append(node)
+    visited[node] = True
     
-    max_cnt = 1
+    linked_node_count = 0
     
     while queue:
+        current_node = queue.popleft()
+        linked_node_count +=1
         
-        current_node , current_cnt = queue.popleft()
-        # print(current_node)
-        # max_cnt = current_cnt if current_cnt > max_cnt else max_cnt
-        
-        next_list = linked_list[current_node]
-        for next in next_list:
-            if visited[next]==0 and next != not_go:
-                queue.append((next, current_cnt+1))
-                visited[next]=1
-                max_cnt +=1
-    return max_cnt
+        for next in graph[current_node]:
+            if visited[next] != True:
+                visited[next] = True
+                queue.append(next)
+                
+    return linked_node_count
+                
+
 
 def solution(n, wires):
     answer = -1
-    
-    linked_list = [ [] for _ in range(n+1)]
-    
-    for wire in wires:
-        linked_list[wire[0]].append(wire[1])
-        linked_list[wire[1]].append(wire[0])
-    
-    diff_min = 100
-    for wire in wires:
-        # print(wire[0], wire[1])
-        a = bfs(linked_list, wire[0], wire[1])
-        b = bfs(linked_list, wire[1], wire[0])
-        # print(a,b)
-        diff_min = abs(a-b) if diff_min > abs(a-b) else diff_min
-        
-    return diff_min
 
+    graph = [[] for i in range(101)]
+    
+    for wire in wires:
+        a = wire[0]
+        b = wire[1]
+        graph[a].append(b)
+        graph[b].append(a)
+        
+    min_temp = 10000
+    
+    for wire in wires:
+        
+        # 끊기
+        a = wire[0]
+        b = wire[1]
+        graph[a].remove(b)
+        graph[b].remove(a)
+        
+    
+        a_linked_node = bfs(a, graph)
+        b_linked_node = bfs(b, graph)
+        
+        min_temp = min(min_temp, abs(a_linked_node - b_linked_node))
+        
+        graph[a].append(b)
+        graph[b].append(a)
+        
+    
+    return min_temp
