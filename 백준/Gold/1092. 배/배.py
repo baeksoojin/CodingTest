@@ -1,3 +1,4 @@
+
 n = int(input())
 c_list = list(map(int, input().split())) # 크레인
 m = int(input())
@@ -18,12 +19,12 @@ else:
 
         # 크래인 무게보다 더 적은 것 중에서 가장 큰 것을 제거
         for c_w in c_list:
+
+            if b_list and c_w < b_list[-1]:
+                break
             for b_w in b_list:
                 if b_w <= c_w:
                     b_list.remove(b_w)
                     break
-
-
-
-    
     print(time)
+
