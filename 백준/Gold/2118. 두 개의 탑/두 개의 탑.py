@@ -1,4 +1,3 @@
-
 n = int(input())
 
 s_diff = [0]*(n)
@@ -8,19 +7,6 @@ for i in range(n):
     
 total = sum(s_diff) 
 
-# # 누적합
-# first = s_diff[0]
-# sum_dp = []
-# sum_dp.append(first)
-
-# for i in range(1,n):
-#     sum_dp.append(sum_dp[i-1] + s_diff[i])
-
-# total = sum_dp[-1]
-# min_diff = -1
-
-
-# 시간초과
 start = end = 0
 result = 0
 
