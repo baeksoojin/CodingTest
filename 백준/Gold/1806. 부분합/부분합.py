@@ -1,42 +1,23 @@
-'''
-부분합이 가장 짧은 것
-부분합이 s이하라면 end+1, s이상이라면 
+n, s = map(int, input().split())
+n_list = list(map(int, input().split()))
 
-부분합 최소길이
-'''
+prefix_sum = [0] * (n + 1)
+for i in range(1, n + 1):
+    prefix_sum[i] = prefix_sum[i - 1] + n_list[i - 1]
 
-import sys
+# Two pointer
+left, right, min_len = 0, 1, float('inf')
 
-input = sys.stdin.readline
+while right <= n:
+    current_sum = prefix_sum[right] - prefix_sum[left]
 
-n,s = map(int, input().split())
+    if current_sum >= s:
+        min_len = min(min_len, right - left)
+        left += 1
+    else:
+        right += 1
 
-nums = list(map(int, input().split()))
-
-start = end = 0
-
-sum = 0
-min_len = n
-flag = False
-while start < n:
-
-    if sum < s: #부분합이 s이하라면 end+1
-        if end>=n:
-            break
-        sum += nums[end]
-        end+=1
-    else: # 부분합이 s이상이라면 s +1
-        flag = True
-        min_len = min(min_len, end-start)
-        sum -= nums[start]
-        start+=1
-        
-
-if flag ==False:
+if min_len == float('inf'):
     print(0)
 else:
     print(min_len)
-
-
-
-
